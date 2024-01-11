@@ -278,7 +278,7 @@ async def crearActividadDiaria(ad_descripcion: str, ad_hora_inicio: str, ad_hora
                 "ad_fecha_bd": detalles_actividad_diaria[7],
             }
             return{
-                    "mensaje": "Actividad registrada correctamente", "Actividad Diaria": actividad_diaria
+                    "mensaje": "Actividad registrada correctamente", "actividad_diaria": actividad_diaria
             }
         else:
             return {
