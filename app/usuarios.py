@@ -93,7 +93,7 @@ async def login(us_email: str, us_contrasenia: str):
         conn.close()
 
         if detalle_usuario:
-            usuario = {
+            return {
                 "us_cedula": detalle_usuario[0],
                 "us_nombres": detalle_usuario[1],
                 "us_apellidos": detalle_usuario[2],
@@ -102,10 +102,7 @@ async def login(us_email: str, us_contrasenia: str):
                 "us_estado": detalle_usuario[5],
                 "us_fecha_bd": detalle_usuario[6],
             }
-            return{
-                    "mensaje": "Login exitoso.", 
-                    "Usuario": usuario
-            }
+
         else:
             raise HTTPException(
                 status_code=401, detail="Error de acceso. Verifica las credenciales y vuelve a intentarlo."
