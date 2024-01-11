@@ -51,7 +51,7 @@ async def obtenerActividadesDiarias():
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias", 
-                "actividades_diarias": lista_actividades_diarias
+                "actividad_diaria": lista_actividades_diarias
                 }
         else:
             return {
@@ -59,7 +59,7 @@ async def obtenerActividadesDiarias():
                 }
 
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias', "exception": e}
+        return {"error": 'Error al obtener la lista de actividades diarias', "exception": str(e)}
     
 @router_actividad_diaria.get("/actividad_diaria_activa/", tags=["Actividad Diaria"])
 async def obtenerActividadesDiariasActivas():
@@ -103,14 +103,14 @@ async def obtenerActividadesDiariasActivas():
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias activas", 
-                "actividades_diarias": lista_actividades_diarias
+                "actividad_diaria": lista_actividades_diarias
                 }
         else:
             return {
                 "mensaje": "No hay actividades activas registradas"
                 }
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias activas', "exception": e}
+        return {"error": 'Error al obtener la lista de actividades diarias activas', "exception": str(e)}
 
 @router_actividad_diaria.get("/actividad_diaria_finalizada/", tags=["Actividad Diaria"])
 async def obtenerActividadesDiariasFinalizadas():
@@ -154,7 +154,7 @@ async def obtenerActividadesDiariasFinalizadas():
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias finalizadas", 
-                "actividades_diarias": lista_actividades_diarias
+                "actividad_diaria": lista_actividades_diarias
                 }
         else:
             return {
@@ -162,7 +162,7 @@ async def obtenerActividadesDiariasFinalizadas():
                 }
 
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias finalizadas', "exception": e}
+        return {"error": 'Error al obtener la lista de actividades diarias finalizadas', "exception": str(e)}
 
 @router_actividad_diaria.get("/actividad_diaria/{ad_usuario}", tags=["Actividad Diaria"])
 async def obtenerActividadesDiariasPorUsuario(ad_usuario: str):
@@ -217,7 +217,7 @@ async def obtenerActividadesDiariasPorUsuario(ad_usuario: str):
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias", 
-                "actividades_diarias": lista_actividades_diarias
+                "actividad_diaria": lista_actividades_diarias
                 }
         else:
             return {
@@ -225,7 +225,7 @@ async def obtenerActividadesDiariasPorUsuario(ad_usuario: str):
                 }
 
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias', "exception": e}
+        return {"error": 'Error al obtener la lista de actividades diarias', "exception": str(e)}
     
 @router_actividad_diaria.post("/actividad_diaria/insert/", tags=["Actividad Diaria"])
 async def crearActividadDiaria(ad_descripcion: str, ad_hora_inicio: str, ad_hora_fin: str, ad_dia: str, ad_usuario: str):
@@ -340,7 +340,7 @@ async def actualizarActividadDiaria(ad_secuencial: int, ad: updateActividadDiari
                 "ad_fecha_bd": detalles_actividad_diaria[7],
             }
             return{
-                    "mensaje": "Actividad actualizada correctamente", "Actividad Diaria": actividad_diaria
+                    "mensaje": "Actividad actualizada correctamente", "actividad_diaria": actividad_diaria
             }
         else:
             return {
@@ -413,7 +413,7 @@ async def actualizarActividadDiaria(ad_secuencial: int):
                 "ad_fecha_bd": detalles_actividad_diaria[7],
             }
             return{
-                    "mensaje": "Actividad eliminada correctamente", "Actividad Diaria": actividad_diaria
+                    "mensaje": "Actividad eliminada correctamente", "actividad_diaria": actividad_diaria
             }
         else:
             return {
