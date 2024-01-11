@@ -217,7 +217,7 @@ async def obtenerActividadesDiariasPorUsuario(ad_usuario: str):
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias", 
-                "actividad_diaria": lista_actividades_diarias
+                "actividades_diarias": lista_actividades_diarias
                 }
         else:
             return {
