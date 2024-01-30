@@ -56,14 +56,16 @@ async def register(us_cedula: str, us_nombres: str, us_apellidos: str, us_email:
             return{
                     "mensaje": "Usuario registrado correctamente", 
                     "Usuario": usuario
-            }
+            }, 200
         else:
-            raise HTTPException(
+            return HTTPException(
                 status_code=401, detail="Error al obtener los datos del usuario creado."
-                )
+            )
 
     except Exception as e:
-        return {"error": 'Error al crear usuario', "message": str(e)}
+        return {
+            "error": 'Error al crear usuario', "message": str(e)
+        }, 404
     
 @router_usuarios.post("/login/", tags=["Usuarios"])
 async def login(us_email: str, us_contrasenia: str):
@@ -93,7 +95,7 @@ async def login(us_email: str, us_contrasenia: str):
         conn.close()
 
         if detalle_usuario:
-            return {
+            usuario = {
                 "us_cedula": detalle_usuario[0],
                 "us_nombres": detalle_usuario[1],
                 "us_apellidos": detalle_usuario[2],
@@ -102,11 +104,16 @@ async def login(us_email: str, us_contrasenia: str):
                 "us_estado": detalle_usuario[5],
                 "us_fecha_bd": detalle_usuario[6],
             }
-
+            return {
+                    "mensaje": "Login exitoso.", 
+                    "Usuario": usuario
+            }, 200
         else:
-            raise HTTPException(
-                status_code=401, detail="Error de acceso. Verifica las credenciales y vuelve a intentarlo."
-                )
+            return {
+                "error": "Error de acceso. Verifica las credenciales y vuelve a intentarlo."
+            }, 404
 
     except Exception as e:
-        return {"error": 'Error al iniciar sesion', "message": str(e)}
+        return {
+            "error": 'Error al iniciar sesion', "message": str(e)
+        }, 404
