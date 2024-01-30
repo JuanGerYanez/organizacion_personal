@@ -53,19 +53,19 @@ async def register(us_cedula: str, us_nombres: str, us_apellidos: str, us_email:
                 "us_estado": detalle_usuario[5],
                 "us_fecha_bd": detalle_usuario[6],
             }
-            return{
+            return {
                     "mensaje": "Usuario registrado correctamente", 
                     "Usuario": usuario
             }, 200
         else:
-            return HTTPException(
-                status_code=401, detail="Error al obtener los datos del usuario creado."
+            raise HTTPException (
+                status_code=404, detail="Error al obtener los datos del usuario creado."
             )
 
     except Exception as e:
-        return {
-            "error": 'Error al crear usuario', "message": str(e)
-        }, 404
+        raise HTTPException(
+            status_code=500, detail="Error interno del servidor. "+str(e)
+        )
     
 @router_usuarios.post("/login/", tags=["Usuarios"])
 async def login(us_email: str, us_contrasenia: str):
@@ -114,5 +114,5 @@ async def login(us_email: str, us_contrasenia: str):
             )
     except Exception as e:
         raise HTTPException(
-            status_code=500, detail="Error interno del servidor"+str(e)
+            status_code=500, detail="Error interno del servidor. "+str(e)
         )
