@@ -51,15 +51,17 @@ async def obtenerActividadesDiarias():
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias", 
-                "actividad_diaria": lista_actividades_diarias
+                "actividades_diarias": lista_actividades_diarias
                 }
         else:
-            return {
-                "mensaje": "No hay actividades registradas"
-                }
+            raise HTTPException(
+                status_code=404, detail="No hay actividades registradas."
+            )
 
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias', "exception": str(e)}
+        raise HTTPException(
+            status_code=500, detail="Error al obtener la lista de actividades diarias. "+str(e)
+        )
     
 @router_actividad_diaria.get("/actividad_diaria_activa/", tags=["Actividad Diaria"])
 async def obtenerActividadesDiariasActivas():
@@ -103,15 +105,16 @@ async def obtenerActividadesDiariasActivas():
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias activas", 
-                "actividad_diaria": lista_actividades_diarias
-                }
+                "actividades_diarias": lista_actividades_diarias
+            }
         else:
-            return {
-                "mensaje": "No hay actividades activas registradas"
-                }
+            raise HTTPException(
+                status_code=404, detail="No hay actividades activas registradas."
+            )
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias activas', "exception": str(e)}
-
+        raise HTTPException(
+            status_code=500, detail="Error al obtener la lista de actividades diarias activas. "+str(e)
+        )
 @router_actividad_diaria.get("/actividad_diaria_finalizada/", tags=["Actividad Diaria"])
 async def obtenerActividadesDiariasFinalizadas():
     try:
@@ -154,15 +157,16 @@ async def obtenerActividadesDiariasFinalizadas():
                 lista_actividades_diarias.append(actividad_diaria)
             return {
                 "mensaje": "Has obtenido tu lista de actividades diarias finalizadas", 
-                "actividad_diaria": lista_actividades_diarias
-                }
+                "actividades_diarias": lista_actividades_diarias
+            }
         else:
-            return {
-                "mensaje": "No hay actividades finalizadas registradas"
-                }
-
+            raise HTTPException(
+                status_code=404, detail="No hay actividades finalizadas registradas."
+            )
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias finalizadas', "exception": str(e)}
+        raise HTTPException(
+            status_code=500, detail="Error al obtener la lista de actividades diarias finalizadas. "+str(e)
+        )
 
 @router_actividad_diaria.get("/actividad_diaria/{ad_usuario}", tags=["Actividad Diaria"])
 async def obtenerActividadesDiariasPorUsuario(ad_usuario: str):
@@ -220,12 +224,14 @@ async def obtenerActividadesDiariasPorUsuario(ad_usuario: str):
                 "actividades_diarias": lista_actividades_diarias
                 }
         else:
-            return {
-                "mensaje": "El usuario indicado no tiene actividades registradas"
-                }
+            raise HTTPException(
+                status_code=404, detail="El usuario indicado no tiene actividades registradas. "
+            )
 
     except Exception as e:
-        return {"error": 'Error al obtener la lista de actividades diarias', "exception": str(e)}
+        raise HTTPException(
+            status_code=500, detail="Error al obtener la lista de actividades diarias. "+str(e)
+        )
     
 @router_actividad_diaria.post("/actividad_diaria/insert/", tags=["Actividad Diaria"])
 async def crearActividadDiaria(ad_descripcion: str, ad_hora_inicio: str, ad_hora_fin: str, ad_dia: str, ad_usuario: str):
@@ -278,15 +284,17 @@ async def crearActividadDiaria(ad_descripcion: str, ad_hora_inicio: str, ad_hora
                 "ad_fecha_bd": detalles_actividad_diaria[7],
             }
             return{
-                    "mensaje": "Actividad registrada correctamente", "actividad_diaria": actividad_diaria
+                    "mensaje": "Actividad registrada correctamente", "Actividad Diaria": actividad_diaria
             }
         else:
-            return {
-                "mensaje": "Error al obtener los detalles de la actividad creada"
-                }
+            raise HTTPException(
+                status_code=404, detail="Error al obtener los detalles de la actividad creada."
+            )
 
     except Exception as e:
-        return {"error": 'Error al crear la actividad', "exception": str(e)}
+        raise HTTPException(
+            status_code=500, detail="Error al crear la actividad. "+str(e)
+        )  
 
 @router_actividad_diaria.put("/actividad_diaria/update/{ad_secuencial}", tags=["Actividad Diaria"])
 async def actualizarActividadDiaria(ad_secuencial: int, ad: updateActividadDiaria):
@@ -305,7 +313,9 @@ async def actualizarActividadDiaria(ad_secuencial: int, ad: updateActividadDiari
                 '''
         cursor.execute(query, (ad.descripcion, ad.hora_inicio, ad.hora_fin, ad_secuencial))
         if cursor.rowcount == 0:
-            raise HTTPException(status_code=404, detail="Actividad no existente")
+            raise HTTPException (
+                status_code=404, detail="Actividad no existente"
+            )
 
         query = ''' 
                     SELECT 
@@ -340,15 +350,17 @@ async def actualizarActividadDiaria(ad_secuencial: int, ad: updateActividadDiari
                 "ad_fecha_bd": detalles_actividad_diaria[7],
             }
             return{
-                    "mensaje": "Actividad actualizada correctamente", "actividad_diaria": actividad_diaria
+                    "mensaje": "Actividad actualizada correctamente", "Actividad Diaria": actividad_diaria
             }
         else:
-            return {
-                "mensaje": "Error al obtener los detalles de la actividad creada"
-                }
+            raise HTTPException(
+                status_code=404, detail="Error al obtener los detalles de la actividad creada."
+            )
 
     except Exception as e:
-        return {"error": 'Error al actualizar la actividad', "exception": str(e)}
+        raise HTTPException(
+            status_code=500, detail="Error al actualizar la actividad. " + str(e)
+        )
 
 @router_actividad_diaria.delete("/actividad_diaria/delete/{ad_secuencial}", tags=["Actividad Diaria"])
 async def actualizarActividadDiaria(ad_secuencial: int):
@@ -375,7 +387,9 @@ async def actualizarActividadDiaria(ad_secuencial: int):
         actividad_diaria = cursor.fetchone()
 
         if not actividad_diaria:
-            return HTTPException(status_code=404, detail="Intentas borrar una actividad no existente")
+            raise HTTPException(
+                status_code=404, detail="Intentas borrar una actividad no existente."
+            )
 
         
 
@@ -413,12 +427,14 @@ async def actualizarActividadDiaria(ad_secuencial: int):
                 "ad_fecha_bd": detalles_actividad_diaria[7],
             }
             return{
-                    "mensaje": "Actividad eliminada correctamente", "actividad_diaria": actividad_diaria
+                    "mensaje": "Actividad eliminada correctamente", "Actividad Diaria": actividad_diaria
             }
         else:
-            return {
-                "mensaje": "Error al obtener los detalles de la actividad eliminada. Actividad no eliminada."
-                }
+            raise HTTPException(
+                status_code=404, detail="Error al obtener los detalles de la actividad eliminada. Actividad no eliminada. "
+            )
         
     except Exception as e:
-        return {"error": 'Error al eliminar la actividad', "exception": str(e)}    
+        raise HTTPException(
+            status_code=500, detail="Error al eliminar la actividad. " + srt(e)
+        )  
