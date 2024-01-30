@@ -114,5 +114,5 @@ async def login(us_email: str, us_contrasenia: str):
             )
     except Exception as e:
         raise HTTPException(
-            status_code=500, detail="Error interno del servidor"
+            status_code=500, detail="Error interno del servidor"+str(e)
         )
