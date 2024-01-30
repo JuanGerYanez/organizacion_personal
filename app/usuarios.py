@@ -109,10 +109,9 @@ async def login(us_email: str, us_contrasenia: str):
                     "Usuario": usuario
             }, 200
         else:
-            status_code = 404
-            return {
-                "error": "Error de acceso. Verifica las credenciales y vuelve a intentarlo."
-            }, status_code
+            return HTTPException (
+                status_code=404, detail="Error de acceso. Verifica las credenciales y vuelve a intentarlo."
+            )
 
     except Exception as e:
         return {
