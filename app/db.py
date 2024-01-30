@@ -5,9 +5,9 @@ class Database:
     def __init__(self, user, psw):
         self.user = user
         self.psw = psw
-        self.host = 'dpg-cmev8uen7f5s7381hq9g-a.singapore-postgres.render.com'
+        self.host = 'dpg-cms607ed3nmc73epb3d0-a.oregon-postgres.render.com'
         self.port = '5432'
-        self.database = 'db_organizacion_personal'
+        self.database = 'organizacion_personal_db'
 
     def getConnection(self):
         try:
@@ -28,4 +28,4 @@ class Database:
         conn.close()
 
 
-database = Database("db_organizacion_personal_user", "6Jf406u6tCs7rpknmHQVrB9A1P3FdTdF")
+database = Database("organizacion_personal_db_user", "SQBBtQFFkrH3yTrqPqTPn1OTcIXFaMX3")
